@@ -1,4 +1,4 @@
-#include "./so_long.h"
+#include "../so_long.h"
 #include <stdio.h>
 
 int	key_hook_handler(int keycode, t_vars vars)
@@ -10,7 +10,10 @@ int	key_hook_handler(int keycode, t_vars vars)
 int	main(int ac, char *av[])
 {
 	if(ac != 2)
+	{
+		ft_printf("Invalid argument\n");
 		return 0;
+	}
 	t_map_info	map_info;
 	char	*map = get_map_as_line(av[1]);
 	map_shape_validate(map);
@@ -20,6 +23,8 @@ int	main(int ac, char *av[])
 	t_vars	vars;
 	create_window(&vars, map_info);
 	mapping_background(vars, map_info);
+	image_into_map(vars, &map_info);
+	put_map_to_window(vars, map_info);
 	mlx_hook(vars.win, 2, 1L<<0, key_hook_handler, &vars);
 	mlx_loop(vars.mlx);
  	// int	i = 0;

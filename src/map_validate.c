@@ -1,10 +1,10 @@
-#include "./so_long.h"
+#include "../so_long.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 void	terminate_error(char *msg)
 {
-	ft_putstr_fd(msg, -1);
+	ft_printf("%s", msg);
 	exit(EXIT_FAILURE);
 }
 

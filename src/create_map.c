@@ -1,4 +1,4 @@
-#include "./so_long.h"
+#include "../so_long.h"
 
 void	create_window(t_vars *vars, t_map_info map_info)
 {
@@ -12,7 +12,8 @@ void	mapping_background(t_vars vars, t_map_info map_info)
 	int	j;
 	void	*img;
 
-	img = mlx_xpm_file_to_image(vars.mlx, "./background.xpm", &i, &j);
+	img = mlx_xpm_file_to_image(vars.mlx, "./map/background.xpm", &i, &j);
+	ft_printf("%X\n", img);
 	i = 0;
 	j = 0;
 	while(i < map_info.height)
@@ -31,6 +32,8 @@ void	image_into_map(t_vars vars, t_map_info *map_info)
 {
 	int	i;
 	int	j;
+	int	width;
+	int	height;
 
 	i = 0;
 	j = 0;
@@ -40,13 +43,13 @@ void	image_into_map(t_vars vars, t_map_info *map_info)
 		while(j < map_info->width)
 		{
 			if(map_info->map[i][j].texture == '1')
-				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "wall.xpm", NULL, NULL);
+				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "./map/wall.xpm", &width, &height);
 			if(map_info->map[i][j].texture == 'C')
-				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "collectible.xpm", NULL, NULL);
+				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "./map/collectible.xpm", &width, &height);
 			if(map_info->map[i][j].texture == 'P')
-				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "player.xpm", NULL, NULL);
+				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "./map/player.xpm", &width, &height);
 			if(map_info->map[i][j].texture == 'E')
-				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "exit.xpm", NULL, NULL);
+				map_info->map[i][j].img = mlx_xpm_file_to_image(vars.mlx, "./map/exit.xpm", &width, &height);
 			j++;
 		}
 		i++;
@@ -65,9 +68,11 @@ void	put_map_to_window(t_vars vars, t_map_info map_info)
 		j = 0;
 		while(j < map_info.width)
 		{
-			mlx_put_image_to_window(vars.mlx, vars.win, map_info.map[i][j].img, j * PANEL_SIZE, i * PANEL_SIZE);
+			// ft_printf("j:%d i:%d \timg %X\n", j, i, map_info.map[i][j].img);
+			if(map_info.map[i][j].texture != '0')
+				mlx_put_image_to_window(vars.mlx, vars.win, map_info.map[i][j].img, j * PANEL_SIZE, i * PANEL_SIZE);
 			j++;
 		}
 		i++;
-}
+	}
 }

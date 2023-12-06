@@ -1,4 +1,4 @@
-#include "./so_long.h"
+#include "../so_long.h"
 
 void	get_map_info(t_map_info *map_info, char *map)
 {

@@ -1,8 +1,8 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
-//#include "./minilibx/mlx.h"
-#include <mlx.h>
+#include "./minilibx/mlx.h"
+//#include "mlx.h"
 #include "./libft/libft.h"
 #include <fcntl.h>
 
@@ -47,5 +47,7 @@ char	*get_map_as_line(char	*file_path);
 //create_map.c
 void	create_window(t_vars *vars, t_map_info map_info);
 void	mapping_background(t_vars vars, t_map_info map_info);
+void	image_into_map(t_vars vars, t_map_info *map_info);
+void	put_map_to_window(t_vars vars, t_map_info map_info);
 
 #endif
