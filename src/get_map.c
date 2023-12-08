@@ -32,6 +32,7 @@ char	*get_map_as_line(char	*file_path)
 	int	fd;
 	int	i;
 	char	*map_line;
+	char	*tmp;
 	char	buff[10];
 
 	map_line = NULL;
@@ -47,8 +48,11 @@ char	*get_map_as_line(char	*file_path)
 		if(i == 0)
 			break ;
 		buff[i] = 0;
+		tmp = map_line;
 		map_line = ft_strjoin(map_line, buff);
+		free(tmp);
 	}
+	close(fd);
 	return (map_line);
 }
 

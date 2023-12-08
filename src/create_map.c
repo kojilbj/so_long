@@ -13,7 +13,6 @@ void	mapping_background(t_vars vars, t_map_info map_info)
 	void	*img;
 
 	img = mlx_xpm_file_to_image(vars.mlx, "./map/background.xpm", &i, &j);
-	ft_printf("%X\n", img);
 	i = 0;
 	j = 0;
 	while(i < map_info.height)
@@ -68,7 +67,6 @@ void	put_map_to_window(t_vars vars, t_map_info map_info)
 		j = 0;
 		while(j < map_info.width)
 		{
-			// ft_printf("j:%d i:%d \timg %X\n", j, i, map_info.map[i][j].img);
 			if(map_info.map[i][j].texture != '0')
 				mlx_put_image_to_window(vars.mlx, vars.win, map_info.map[i][j].img, j * PANEL_SIZE, i * PANEL_SIZE);
 			j++;
