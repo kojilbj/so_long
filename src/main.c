@@ -6,12 +6,11 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:28 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 16:07:22 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:01:16 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-#include <stdio.h>
 
 int	key_hook_handler(int keycode, t_vars *vars)
 {

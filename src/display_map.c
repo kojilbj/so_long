@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:17 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 16:21:58 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:49:29 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	create_window(t_vars *vars)
 		terminate_perror("Error\nmlx_initilize", 0);
 	vars->win = mlx_new_window(vars->mlx, vars->map_info.width * PANEL_SIZE,
 		vars->map_info.height * PANEL_SIZE, "so_long");
+	if(vars->win == NULL)
 		terminate_perror("Error\nmlx_new_window", 0);
 }
 

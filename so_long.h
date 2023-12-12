@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:34 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 15:59:35 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:05:20 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void				reflesh_window(int direction, t_vars vars);
 void				move_player(int direction, t_vars *vars);
 int					move_player_check(int keycode, t_vars *vars);
 
-// exit.c
+// terminate.c
 int					terminate_program(t_vars *vars);
 int					exit_check(t_vars vars);
 

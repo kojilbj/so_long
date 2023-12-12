@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:47 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 16:43:48 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:57:45 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	terminate_program(t_vars *vars)
 {
 	all_free(vars->map_info.map);
-	int i = mlx_destroy_image(vars->mlx, vars->map_imgs.background);
+	mlx_destroy_image(vars->mlx, vars->map_imgs.background);
 	mlx_destroy_image(vars->mlx, vars->map_imgs.collectible);
 	mlx_destroy_image(vars->mlx, vars->map_imgs.exit);
 	mlx_destroy_image(vars->mlx, vars->map_imgs.player);
 	mlx_destroy_image(vars->mlx, vars->map_imgs.wall);
 	mlx_destroy_window(vars->mlx, vars->win);
-	ft_printf("%d\n", i);
+	mlx_destroy_display(vars->mlx);
 	exit(EXIT_SUCCESS);
 	return (1);
 }
