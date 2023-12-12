@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_validate.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
+/*   Updated: 2023/12/12 16:05:48 by kojwatan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../so_long.h"
 
 void	terminate_perror(char *msg, int errnum)
 {
-	if(errnum != 0)
+	if (errnum != 0)
 		errno = errnum;
 	perror(msg);
 	exit(EXIT_FAILURE);
@@ -13,7 +25,7 @@ void	file_name_validate(char *arg)
 	char	*ptr;
 
 	ptr = ft_strrchr(arg, '.');
-	if(ft_strncmp(ptr, ".ber\0", 5))
+	if (ft_strncmp(ptr, ".ber\0", 5))
 		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
 }
 
