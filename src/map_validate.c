@@ -34,10 +34,8 @@ void	map_shape_validate(char *map)
 {
 	int	width;
 	int	tmp;
-	int	height;
 
 	width = 0;
-	height = 0;
 	tmp = 0;
 	while (*map)
 	{
@@ -48,12 +46,10 @@ void	map_shape_validate(char *map)
 			if (tmp != width)
 				terminate_error("Invalid map\n");
 			width = 0;
-			map++;
-			height++;
-			continue ;
 		}
+		else
+			width++;
 		map++;
-		width++;
 	}
 	if (tmp != width)
 		terminate_error("Invalid map\n");
@@ -85,7 +81,7 @@ void	correct_wall_validate(t_map_info map_info)
 
 void	map_playable_validate(char *map, t_map_info map_info)
 {
-	if (map_info.width <= 2 || map_info.height <= 2 || map_info.collectible < 1)
+	if (map_info.width <= 2 || map_info.height <= 2 || map_info.collectible_count < 1)
 		terminate_error("Invalid map\n");
 	map_texture_validate(map);
 	correct_wall_validate(map_info);
