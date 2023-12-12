@@ -53,10 +53,7 @@ char	*get_map_as_line(char *file_path)
 	map_line = NULL;
 	fd = open(file_path, O_RDONLY);
 	if(fd == -1)
-	{
-		perror("open");
-		exit(1);
-	}
+		terminate_perror("Error\nopen", 0);
 	while(1)
 	{
 		i = read(fd, buff, 9);
@@ -71,26 +68,44 @@ char	*get_map_as_line(char *file_path)
 	return (map_line);
 }
 
+void	all_free(t_image_info **z_dimention_map)
+{
+	int	i;
+
+	i = 0;
+	while(z_dimention_map[i])
+	{
+		free(z_dimention_map[i]);
+		i++;
+	}
+}
+
 t_image_info	**get_z_dimention_map(t_map_info *map_info, char *map)
 {
 	t_image_info	**z_dimention_map;
 	int	i;
 	int	j;
 
-	z_dimention_map = (t_image_info **)malloc(sizeof(t_image_info *) * (map_info->height + 1));
+	z_dimention_map = (t_image_info **)malloc(sizeof(t_image_info *) * (map_info->height) + 1);
+	if(z_dimention_map == NULL)
+		terminate_perror("Error\nmalloc", 0);
 	i= 0;
 	j = 0;
 	while(i < map_info->height)
 	{
-		z_dimention_map[i] = malloc(sizeof(t_image_info) * (map_info->width + 1));
+		z_dimention_map[i] = malloc(sizeof(t_image_info) * (map_info->width));
+		if(z_dimention_map[i] == NULL)
+		{
+			all_free(z_dimention_map);
+			terminate_perror("Error\nmalloc", 0);
+		}
+		j = 0;
 		while(j < map_info->width)
 		{
 			z_dimention_map[i][j].texture = *map;
 			j++;
 			map++;
 		}
-		z_dimention_map[i][j].texture= 'Z';
-		j = 0;
 		map++;
 		i++;
 	}

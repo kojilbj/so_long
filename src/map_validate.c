@@ -1,11 +1,20 @@
 #include "../so_long.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-void	terminate_error(char *msg)
+void	terminate_perror(char *msg, int errnum)
 {
-	ft_printf("%s", msg);
+	if(errnum != 0)
+		errno = errnum;
+	perror(msg);
 	exit(EXIT_FAILURE);
+}
+
+void	file_name_validate(char *arg)
+{
+	char	*ptr;
+
+	ptr = ft_strrchr(arg, '.');
+	if(ft_strncmp(ptr, ".ber\0", 5))
+		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
 }
 
 void	map_texture_validate(char *map)
@@ -19,7 +28,7 @@ void	map_texture_validate(char *map)
 	{
 		if (!(*map == '1' || *map == '0' || *map == 'E' || *map == 'C'
 				|| *map == 'P' || *map == '\n'))
-			terminate_error("Invalid map\n");
+			terminate_perror("Error\nMap contains invalid charecter", 22);
 		if (*map == 'P')
 			pfg++;
 		if (*map == 'E')
@@ -27,7 +36,7 @@ void	map_texture_validate(char *map)
 		map++;
 	}
 	if (pfg != 1 || efg != 1)
-		terminate_error("Invalid map\n");
+		terminate_perror("Error\nMap must has only one P and E", 22);
 }
 
 void	map_shape_validate(char *map)
@@ -44,7 +53,7 @@ void	map_shape_validate(char *map)
 			if (tmp == 0)
 				tmp = width;
 			if (tmp != width)
-				terminate_error("Invalid map\n");
+				terminate_perror("Error\nMap must be rectangle", 22);
 			width = 0;
 		}
 		else
@@ -52,7 +61,7 @@ void	map_shape_validate(char *map)
 		map++;
 	}
 	if (tmp != width)
-		terminate_error("Invalid map\n");
+		terminate_perror("Error\nMap must be rectangle", 22);
 }
 
 void	correct_wall_validate(t_map_info map_info)
@@ -70,7 +79,7 @@ void	correct_wall_validate(t_map_info map_info)
 				|| j == map_info.width - 1)
 			{
 				if (map_info.map[i][j].texture != '1')
-					terminate_error("Invalid map\n");
+					terminate_perror("Error\nMap must surrounded by '1'", 22);
 			}
 			j++;
 		}
@@ -81,8 +90,10 @@ void	correct_wall_validate(t_map_info map_info)
 
 void	map_playable_validate(char *map, t_map_info map_info)
 {
-	if (map_info.width <= 2 || map_info.height <= 2 || map_info.collectible_count < 1)
-		terminate_error("Invalid map\n");
+	if (map_info.width <= 2 || map_info.height <= 2)
+		terminate_perror("Error\nMap is too narrow", 22);
+	if (map_info.collectible_count < 1)
+		terminate_perror("Error\nMap must has at least one 'C'", 22);
 	map_texture_validate(map);
 	correct_wall_validate(map_info);
 }

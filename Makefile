@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wextra -Wall -Werror
 
-SRCS = ./src/display_map.c ./src/get_map.c ./src/get_player_info.c ./src/main.c ./src/map_validate.c ./src/control_player.c
+SRCS = ./src/exit.c ./src/display_map.c ./src/get_map.c ./src/get_player_info.c ./src/main.c ./src/map_validate.c ./src/control_player.c
 OBJS = $(SRCS:.c=.o)
 NAME = so_long
 
@@ -22,7 +22,7 @@ clean:
 
 fclean: clean
 	$(MAKE) -C ./libft fclean
-	$(MAKE) -C ./minilibx fclean
+	$(MAKE) -C ./minilibx clean
 	rm -f $(NAME)
 
 re: fclean $(NAME)

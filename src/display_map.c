@@ -1,24 +1,26 @@
 #include "../so_long.h"
 
-void	create_window(t_vars *vars, t_map_info map_info)
+void	create_window(t_vars *vars)
 {
 	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, map_info.width * PANEL_SIZE, map_info.height * PANEL_SIZE, "so_long");
+	vars->win = mlx_new_window(vars->mlx, vars->map_info.width * PANEL_SIZE, vars->map_info.height * PANEL_SIZE, "so_long");
 }
 
-void	mapping_background(t_vars vars, t_map_info *map_info)
+void	mapping_background(t_vars vars)
 {
 	int	i;
 	int	j;
+	t_map_info	map_info;
 	void	*img;
 
 	img = vars.map_imgs.background;
+	map_info = vars.map_info;
 	i = 0;
 	j = 0;
-	while(i < map_info->height)
+	while(i < map_info.height)
 	{
 		j = 0;
-		while(j < map_info->width)
+		while(j < map_info.width)
 		{
 			mlx_put_image_to_window(vars.mlx, vars.win, img, j * PANEL_SIZE, i * PANEL_SIZE);
 			j++;
