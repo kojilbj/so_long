@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   terminate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:47 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 14:53:08 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:46:08 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+void	terminate_perror(char *msg, int errnum)
+{
+	if (errnum != 0)
+		errno = errnum;
+	perror(msg);
+	exit(EXIT_FAILURE);
+}
 
 void	map_free(char **z_dimention_map)
 {
@@ -26,14 +34,18 @@ void	map_free(char **z_dimention_map)
 
 int	terminate_program(t_vars *vars)
 {
-	map_free(vars->map_info.map);
-	mlx_destroy_image(vars->mlx, vars->map_imgs.background);
-	mlx_destroy_image(vars->mlx, vars->map_imgs.collectible);
-	mlx_destroy_image(vars->mlx, vars->map_imgs.exit);
-	mlx_destroy_image(vars->mlx, vars->map_imgs.player);
-	mlx_destroy_image(vars->mlx, vars->map_imgs.wall);
 	mlx_destroy_window(vars->mlx, vars->win);
-	mlx_destroy_display(vars->mlx);
+	map_free(vars->map_info.map);
+	if(vars->map_imgs.background != NULL)
+		mlx_destroy_image(vars->mlx, vars->map_imgs.background);
+	if(vars->map_imgs.collectible != NULL)
+		mlx_destroy_image(vars->mlx, vars->map_imgs.collectible);
+	if(vars->map_imgs.exit != NULL)
+		mlx_destroy_image(vars->mlx, vars->map_imgs.exit);
+	if(vars->map_imgs.player != NULL)
+		mlx_destroy_image(vars->mlx, vars->map_imgs.player);
+	if(vars->map_imgs.wall != NULL)
+		mlx_destroy_image(vars->mlx, vars->map_imgs.wall);
 	free(vars->mlx);
 	exit(EXIT_SUCCESS);
 	return (1);
@@ -41,8 +53,8 @@ int	terminate_program(t_vars *vars)
 
 int	exit_check(t_vars vars)
 {
-	int				x;
-	int				y;
+	int		x;
+	int		y;
 	char	**map;
 
 	x = vars.player_info.curr_x;

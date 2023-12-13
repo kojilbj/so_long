@@ -6,11 +6,17 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:28 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 14:57:04 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:40:33 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+#include <libc.h>
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q so_long");
+}
 
 int	key_hook_handler(int keycode, t_vars *vars)
 {
@@ -42,7 +48,7 @@ int	main(int ac, char *av[])
 	create_window(&vars);
 	set_map_imgs(&vars);
 	vars.map_info.map = get_z_dimention_map(map_line);
-	map_playable_validate(map_line, vars.map_info);
+	map_playable_validate(vars.map_info);
 	free(map_line);
 	vars.player_info = get_player_info(vars.map_info);
 	mapping_background(vars);

@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:17 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 14:36:59 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:51:26 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ void	create_window(t_vars *vars)
 	int	width;
 	int	height;
 
-	width = vars->map_info.width* PANEL_SIZE;
+	width = vars->map_info.width * PANEL_SIZE;
 	height = vars->map_info.height * PANEL_SIZE;
 	vars->mlx = mlx_init();
-	if(vars->mlx == NULL)
+	if (vars->mlx == NULL)
 		terminate_perror("Error\nmlx_initilize", 0);
 	vars->win = mlx_new_window(vars->mlx, width, height, "so_long");
-	if(vars->win == NULL)
+	if (vars->win == NULL)
+	{
+		free(vars->mlx);
 		terminate_perror("Error\nmlx_new_window", 0);
+	}
 }
 
 void	mapping_background(t_vars vars)
@@ -53,20 +56,23 @@ void	mapping_background(t_vars vars)
 
 static void	put_map_to_window_util(t_vars vars, int x, int y)
 {
-	char	**map;
-
+	char		**map;
 	t_map_imgs	imgs;
 
 	map = vars.map_info.map;
 	imgs = vars.map_imgs;
-	if(map[y][x] == '1')
-		mlx_put_image_to_window(vars.mlx, vars.win, imgs.wall, x * PANEL_SIZE, y * PANEL_SIZE);
-	if(map[y][x] == 'C')
-		mlx_put_image_to_window(vars.mlx, vars.win, imgs.collectible, x * PANEL_SIZE, y * PANEL_SIZE);
-	if(map[y][x] == 'P')
-		mlx_put_image_to_window(vars.mlx, vars.win, imgs.player, x * PANEL_SIZE, y * PANEL_SIZE);
-	if(map[y][x] == 'E')
-		mlx_put_image_to_window(vars.mlx, vars.win, imgs.exit, x * PANEL_SIZE, y * PANEL_SIZE);
+	if (map[y][x] == '1')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs.wall, x * PANEL_SIZE, y
+			* PANEL_SIZE);
+	if (map[y][x] == 'C')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs.collectible, x
+			* PANEL_SIZE, y * PANEL_SIZE);
+	if (map[y][x] == 'P')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs.player, x * PANEL_SIZE,
+			y * PANEL_SIZE);
+	if (map[y][x] == 'E')
+		mlx_put_image_to_window(vars.mlx, vars.win, imgs.exit, x * PANEL_SIZE, y
+			* PANEL_SIZE);
 }
 
 void	put_map_to_window(t_vars vars)

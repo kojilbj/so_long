@@ -6,14 +6,14 @@
 #    By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 15:59:39 by kojwatan          #+#    #+#              #
-#    Updated: 2023/12/13 13:11:22 by kojwatan         ###   ########.fr        #
+#    Updated: 2023/12/13 17:43:40 by kojwatan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wextra -Wall -Werror -g  -fsanitize=address
+CFLAGS = -Wextra -Wall -Werror 
 
-SRCS = ./src/terminate.c ./src/display_map.c ./src/get_map.c ./src/get_player_info.c ./src/main.c ./src/map_validate.c ./src/control_player.c
+SRCS = ./src/terminate.c ./src/display_map.c ./src/get_map.c ./src/player_info.c ./src/main.c ./src/validates.c ./src/control_player.c ./src/window_manage.c
 OBJS = $(SRCS:.c=.o)
 NAME = so_long
 

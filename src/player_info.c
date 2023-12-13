@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:24 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 14:44:37 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:51:33 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	move_count(int move_direction, t_vars *vars)
 void	collect_count(t_vars *vars)
 {
 	char	**map;
-	int				x;
-	int				y;
+	int		x;
+	int		y;
 
 	map = vars->map_info.map;
 	x = vars->player_info.curr_x;

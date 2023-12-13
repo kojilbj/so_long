@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:34 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 14:59:07 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:22:19 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ typedef struct s_player_info
 
 typedef struct s_vars
 {
-	void			*win;
 	void			*mlx;
+	void			*win;
+	t_map_imgs		map_imgs;
 	t_map_info		map_info;
 	t_player_info	player_info;
-	t_map_imgs		map_imgs;
 }					t_vars;
 
 // map_validate.c
 void				terminate_perror(char *msg, int errnum);
 void				file_name_validate(char *arg);
-void				map_texture_validate(char *map);
+void				map_texture_validate(char **map);
 void				map_shape_validate(char *map);
 void				correct_wall_validate(t_map_info map_info);
-void				map_playable_validate(char *map, t_map_info map_info);
+void				map_playable_validate(t_map_info map_info);
 
 // get_map.c
 void				get_map_info(t_vars *vars, char *map);
@@ -86,9 +86,11 @@ void				move_count(int move_direcion, t_vars *vars);
 void				collect_count(t_vars *vars);
 
 // control_player.c
-void				reflesh_window(int direction, t_vars vars);
 void				move_player(int direction, t_vars *vars);
 int					move_player_check(int keycode, t_vars vars);
+
+//window_manage.c
+void	reflesh_window(int direction, t_vars vars);
 
 // terminate.c
 void				map_free(char **z_dimention_map);

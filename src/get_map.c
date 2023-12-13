@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:20 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 14:51:22 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:00:46 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,15 @@ void	set_map_imgs(t_vars *vars)
 
 	mlx = vars->mlx;
 	map_imgs = &vars->map_imgs;
-	map_imgs->player = mlx_xpm_file_to_image(mlx, "map/player.xpm", &tmp,
-		&tmp);
-	map_imgs->exit = mlx_xpm_file_to_image(mlx, "map/exit.xpm", &tmp,
-		&tmp);
+	map_imgs->player = mlx_xpm_file_to_image(mlx, "map/player.xpm", &tmp, &tmp);
+	map_imgs->exit = mlx_xpm_file_to_image(mlx, "map/exit.xpm", &tmp, &tmp);
 	map_imgs->collectible = mlx_xpm_file_to_image(mlx, "map/collectible.xpm",
-		&tmp, &tmp);
+			&tmp, &tmp);
 	map_imgs->background = mlx_xpm_file_to_image(mlx, "map/background.xpm",
-		&tmp, &tmp);
-	map_imgs->wall = mlx_xpm_file_to_image(mlx, "map/wall.xpm", &tmp,
-		&tmp);
-	if(!(map_imgs->player && map_imgs->exit && map_imgs->collectible && map_imgs->background && map_imgs->wall))
+			&tmp, &tmp);
+	map_imgs->wall = mlx_xpm_file_to_image(mlx, "map/wall.xpm", &tmp, &tmp);
+	if (!(map_imgs->player && map_imgs->exit && map_imgs->collectible
+			&& map_imgs->background && map_imgs->wall))
 	{
 		perror("Error\nmlx_xpm_file_to_image");
 		terminate_program(vars);
@@ -84,6 +82,8 @@ char	*get_map_as_line(char *file_path)
 		tmp = map_line;
 		map_line = ft_strjoin(map_line, buff);
 		free(tmp);
+		if (map_line == NULL)
+			terminate_perror("Error\nft_strjoin", 0);
 	}
 	close(fd);
 	return (map_line);
@@ -94,7 +94,7 @@ char	**get_z_dimention_map(char *map)
 	char	**z_dimention_map;
 
 	z_dimention_map = ft_split(map, '\n');
-	if(z_dimention_map == NULL)
+	if (z_dimention_map == NULL)
 		terminate_perror("Error\nft_split", 0);
-	return z_dimention_map;
+	return (z_dimention_map);
 }

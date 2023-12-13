@@ -6,46 +6,56 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 15:03:30 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:05:21 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-void	terminate_perror(char *msg, int errnum)
-{
-	if (errnum != 0)
-		errno = errnum;
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
-
 void	file_name_validate(char *arg)
 {
 	char	*ptr;
 
+	if (ft_strlen(arg) < 5)
+		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
 	ptr = ft_strrchr(arg, '.');
 	if (ft_strncmp(ptr, ".ber\0", 5))
 		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
 }
 
+static void	map_texture_validate_util(char c, int *pfg, int *efg)
+{
+	if (!(c == '1' || c == '0' || c == 'E' || c == 'C' || c == 'P'
+			|| c == '\n'))
+		terminate_perror("Error\nMap contains invalid charecter", 22);
+	if (c == 'P')
+		(*pfg)++;
+	if (c == 'E')
+		(*efg)++;
+}
+
 void	map_texture_validate(char **map)
 {
-	int	pfg;
-	int	efg;
+	int		x;
+	int		y;
+	int		pfg;
+	int		efg;
+	char	c;
 
+	x = 0;
+	y = 0;
 	pfg = 0;
 	efg = 0;
-	while (*map)
+	while (map[y])
 	{
-		if (!(*map == '1' || *map == '0' || *map == 'E' || *map == 'C'
-				|| *map == 'P' || *map == '\n'))
-			terminate_perror("Error\nMap contains invalid charecter", 22);
-		if (*map == 'P')
-			pfg++;
-		if (*map == 'E')
-			efg++;
-		map++;
+		x = 0;
+		while (map[y][x])
+		{
+			c = map[y][x];
+			map_texture_validate_util(c, &pfg, &efg);
+			x++;
+		}
+		y++;
 	}
 	if (pfg != 1 || efg != 1)
 		terminate_perror("Error\nMap must has only one P and E", 22);
@@ -109,4 +119,3 @@ void	map_playable_validate(t_map_info map_info)
 	map_texture_validate(map_info.map);
 	correct_wall_validate(map_info);
 }
-
