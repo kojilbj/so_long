@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:24 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 15:59:25 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:44:37 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 t_player_info	get_player_info(t_map_info map_info)
 {
-	int				i;
-	int				j;
+	int				x;
+	int				y;
 	t_player_info	player_info;
 
-	i = 0;
-	j = 0;
-	while (i < map_info.height)
+	x = 0;
+	y = 0;
+	while (y < map_info.height)
 	{
-		j = 0;
-		while (j < map_info.width)
+		x = 0;
+		while (x < map_info.width)
 		{
-			if (map_info.map[i][j].texture == 'P')
+			if (map_info.map[y][x] == 'P')
 			{
-				player_info.curr_x = j;
-				player_info.curr_y = i;
+				player_info.curr_x = x;
+				player_info.curr_y = y;
 				break ;
 			}
-			j++;
+			x++;
 		}
-		i++;
+		y++;
 	}
 	player_info.collect_count = 0;
 	player_info.move_count = 0;
@@ -49,16 +49,16 @@ void	move_count(int move_direction, t_vars *vars)
 
 void	collect_count(t_vars *vars)
 {
-	t_image_info	**map;
+	char	**map;
 	int				x;
 	int				y;
 
 	map = vars->map_info.map;
 	x = vars->player_info.curr_x;
 	y = vars->player_info.curr_y;
-	if (map[y][x].texture == 'C')
+	if (map[y][x] == 'C')
 	{
 		vars->player_info.collect_count++;
-		map[y][x].texture = '0';
+		map[y][x] = '0';
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 16:05:48 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:03:30 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	file_name_validate(char *arg)
 		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
 }
 
-void	map_texture_validate(char *map)
+void	map_texture_validate(char **map)
 {
 	int	pfg;
 	int	efg;
@@ -78,39 +78,35 @@ void	map_shape_validate(char *map)
 
 void	correct_wall_validate(t_map_info map_info)
 {
-	int	i;
-	int	j;
+	int	x;
+	int	y;
 
-	i = 0;
-	j = 0;
-	while (i < map_info.height)
+	x = 0;
+	y = 0;
+	while (y < map_info.height)
 	{
-		while (j < map_info.width)
+		x = 0;
+		while (x < map_info.width)
 		{
-			if (i == 0 || i == map_info.height - 1 || j == 0
-				|| j == map_info.width - 1)
+			if (y == 0 || y == map_info.height - 1 || x == 0
+				|| x == map_info.width - 1)
 			{
-				if (map_info.map[i][j].texture != '1')
+				if (map_info.map[y][x] != '1')
 					terminate_perror("Error\nMap must surrounded by '1'", 22);
 			}
-			j++;
+			x++;
 		}
-		j = 0;
-		i++;
+		y++;
 	}
 }
 
-void	map_playable_validate(char *map, t_map_info map_info)
+void	map_playable_validate(t_map_info map_info)
 {
 	if (map_info.width <= 2 || map_info.height <= 2)
 		terminate_perror("Error\nMap is too narrow", 22);
 	if (map_info.collectible_count < 1)
 		terminate_perror("Error\nMap must has at least one 'C'", 22);
-	map_texture_validate(map);
+	map_texture_validate(map_info.map);
 	correct_wall_validate(map_info);
 }
 
-void	map_validate(char *map)
-{
-	map_shape_validate(map);
-}

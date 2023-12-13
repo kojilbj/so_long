@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:20 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/12 17:19:14 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:51:22 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,22 @@ void	get_map_info(t_vars *vars, char *map)
 
 void	set_map_imgs(t_vars *vars)
 {
+	int			tmp;
 	void		*mlx;
 	t_map_imgs	*map_imgs;
-	int			width;
-	int			height;
 
 	mlx = vars->mlx;
 	map_imgs = &vars->map_imgs;
-	map_imgs->player = mlx_xpm_file_to_image(mlx, "map/player.xpm", &width,
-		&height);
-	map_imgs->exit = mlx_xpm_file_to_image(mlx, "map/exit.xpm", &width,
-		&height);
+	map_imgs->player = mlx_xpm_file_to_image(mlx, "map/player.xpm", &tmp,
+		&tmp);
+	map_imgs->exit = mlx_xpm_file_to_image(mlx, "map/exit.xpm", &tmp,
+		&tmp);
 	map_imgs->collectible = mlx_xpm_file_to_image(mlx, "map/collectible.xpm",
-		&width, &height);
+		&tmp, &tmp);
 	map_imgs->background = mlx_xpm_file_to_image(mlx, "map/background.xpm",
-		&width, &height);
-	map_imgs->wall = mlx_xpm_file_to_image(mlx, "map/wall.xpm", &width,
-		&height);
+		&tmp, &tmp);
+	map_imgs->wall = mlx_xpm_file_to_image(mlx, "map/wall.xpm", &tmp,
+		&tmp);
 	if(!(map_imgs->player && map_imgs->exit && map_imgs->collectible && map_imgs->background && map_imgs->wall))
 	{
 		perror("Error\nmlx_xpm_file_to_image");
@@ -66,11 +65,11 @@ void	set_map_imgs(t_vars *vars)
 
 char	*get_map_as_line(char *file_path)
 {
-	int		fd;
 	int		i;
-	char	*map_line;
-	char	*tmp;
+	int		fd;
 	char	buff[10];
+	char	*tmp;
+	char	*map_line;
 
 	map_line = NULL;
 	fd = open(file_path, O_RDONLY);
@@ -90,48 +89,12 @@ char	*get_map_as_line(char *file_path)
 	return (map_line);
 }
 
-void	all_free(t_image_info **z_dimention_map)
+char	**get_z_dimention_map(char *map)
 {
-	int	i;
+	char	**z_dimention_map;
 
-	i = 0;
-	while (z_dimention_map[i])
-	{
-		free(z_dimention_map[i]);
-		i++;
-	}
-}
-
-t_image_info	**get_z_dimention_map(t_map_info *map_info, char *map)
-{
-	t_image_info	**z_dimention_map;
-	int				i;
-	int				j;
-
-	z_dimention_map = (t_image_info **)malloc(sizeof(t_image_info *)
-		* ((map_info->height) + 1));
-	if (z_dimention_map == NULL)
-		terminate_perror("Error\nmalloc", 0);
-	i = 0;
-	j = 0;
-	while (i < map_info->height)
-	{
-		z_dimention_map[i] = malloc(sizeof(t_image_info) * (map_info->width));
-		if (z_dimention_map[i] == NULL)
-		{
-			all_free(z_dimention_map);
-			terminate_perror("Error\nmalloc", 0);
-		}
-		j = 0;
-		while (j < map_info->width)
-		{
-			z_dimention_map[i][j].texture = *map;
-			j++;
-			map++;
-		}
-		map++;
-		i++;
-	}
-	z_dimention_map[i] = NULL;
-	return (z_dimention_map);
+	z_dimention_map = ft_split(map, '\n');
+	if(z_dimention_map == NULL)
+		terminate_perror("Error\nft_split", 0);
+	return z_dimention_map;
 }
