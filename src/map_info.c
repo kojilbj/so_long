@@ -14,26 +14,29 @@
 
 void	get_map_info(t_vars *vars, char *map)
 {
+	int	i;
+
+	i = 0;
 	vars->map_info.width = 0;
 	vars->map_info.height = 0;
 	vars->map_info.collectible_count = 0;
-	while (*map)
+	while (map[i])
 	{
-		if (*map == 'C')
+		if (map[i] == 'C')
 			vars->map_info.collectible_count++;
-		if (*map == 'E')
+		if (map[i] == 'E')
 		{
 			vars->map_info.exit_x = vars->map_info.width;
 			vars->map_info.exit_y = vars->map_info.height;
 		}
-		if (*map == '\n')
+		if (map[i] == '\n')
 		{
 			vars->map_info.height++;
 			vars->map_info.width = 0;
 		}
 		else
 			vars->map_info.width++;
-		map++;
+		i++;
 	}
 	vars->map_info.height++;
 }
@@ -56,12 +59,12 @@ void	set_map_imgs(t_vars *vars)
 	if (!(map_imgs->player && map_imgs->exit && map_imgs->collectible
 			&& map_imgs->background && map_imgs->wall))
 	{
-		perror("Error\nmlx_xpm_file_to_image");
-		terminate_program(vars);
+		ft_putstr_fd("Error\nmlx_xpm_file_to_image", 2);
+		terminate_program(*vars);
 	}
 }
 
-char	*get_map_as_line(char *file_path)
+char	*map_file_to_line(char *file_path)
 {
 	int		i;
 	int		fd;

@@ -32,40 +32,39 @@ void	map_free(char **z_dimention_map)
 	}
 }
 
-int	terminate_program(t_vars *vars)
+int	terminate_program(t_vars vars)
 {
-	mlx_destroy_window(vars->mlx, vars->win);
-	map_free(vars->map_info.map);
-	if(vars->map_imgs.background != NULL)
-		mlx_destroy_image(vars->mlx, vars->map_imgs.background);
-	if(vars->map_imgs.collectible != NULL)
-		mlx_destroy_image(vars->mlx, vars->map_imgs.collectible);
-	if(vars->map_imgs.exit != NULL)
-		mlx_destroy_image(vars->mlx, vars->map_imgs.exit);
-	if(vars->map_imgs.player != NULL)
-		mlx_destroy_image(vars->mlx, vars->map_imgs.player);
-	if(vars->map_imgs.wall != NULL)
-		mlx_destroy_image(vars->mlx, vars->map_imgs.wall);
-	free(vars->mlx);
+	mlx_destroy_window(vars.mlx, vars.win);
+	map_free(vars.map_info.map);
+	if (vars.map_imgs.background != NULL)
+		mlx_destroy_image(vars.mlx, vars.map_imgs.background);
+	if (vars.map_imgs.collectible != NULL)
+		mlx_destroy_image(vars.mlx, vars.map_imgs.collectible);
+	if (vars.map_imgs.exit != NULL)
+		mlx_destroy_image(vars.mlx, vars.map_imgs.exit);
+	if (vars.map_imgs.player != NULL)
+		mlx_destroy_image(vars.mlx, vars.map_imgs.player);
+	if (vars.map_imgs.wall != NULL)
+		mlx_destroy_image(vars.mlx, vars.map_imgs.wall);
+	free(vars.mlx);
 	exit(EXIT_SUCCESS);
 	return (1);
 }
 
 int	exit_check(t_vars vars)
 {
+	int		collected;
+	int		collectibles;
 	int		x;
 	int		y;
-	char	**map;
+	char	letter;
 
+	collected = vars.player_info.collect_count;
+	collectibles = vars.map_info.collectible_count;
 	x = vars.player_info.curr_x;
 	y = vars.player_info.curr_y;
-	map = vars.map_info.map;
-	if (map[y][x] == 'E'
-		&& vars.player_info.collect_count == vars.map_info.collectible_count)
+	letter = vars.map_info.map[y][x];
+	if (letter == 'E' && collected == collectibles)
 		return (1);
-	if (map[y][x] != 'E')
-		mlx_put_image_to_window(vars.mlx, vars.win, vars.map_imgs.exit,
-			vars.map_info.exit_x * PANEL_SIZE, vars.map_info.exit_y
-			* PANEL_SIZE);
 	return (0);
 }

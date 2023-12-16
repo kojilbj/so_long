@@ -14,14 +14,17 @@
 
 void	move_player(int direction, t_vars *vars)
 {
+	t_player_info *player;
+
+	player = &vars->player_info;
 	if (direction == UP)
-		vars->player_info.curr_y -= 1;
+		player->curr_y -= 1;
 	if (direction == DOWN)
-		vars->player_info.curr_y += 1;
+		player->curr_y += 1;
 	if (direction == RIGHT)
-		vars->player_info.curr_x += 1;
+		player->curr_x += 1;
 	if (direction == LEFT)
-		vars->player_info.curr_x -= 1;
+		player->curr_x -= 1;
 }
 
 int	move_player_check(int keycode, t_vars vars)

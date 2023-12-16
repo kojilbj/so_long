@@ -32,6 +32,13 @@ static void	reflesh_window_util(int x, int y, t_vars vars)
 
 void	reflesh_window(int direction, t_vars vars)
 {
+	int		x;
+	int		y;
+	char	letter;
+
+	x = vars.player_info.curr_x;
+	y = vars.player_info.curr_y;
+	letter = vars.map_info.map[y][x];
 	if (direction == UP)
 		reflesh_window_util(0, 1, vars);
 	if (direction == DOWN)
@@ -40,4 +47,11 @@ void	reflesh_window(int direction, t_vars vars)
 		reflesh_window_util(-1, 0, vars);
 	if (direction == LEFT)
 		reflesh_window_util(+1, 0, vars);
+	if (letter != 'E')
+		mlx_put_image_to_window
+		(
+			vars.mlx, vars.win, vars.map_imgs.exit,
+			vars.map_info.exit_x * PANEL_SIZE,
+			vars.map_info.exit_y * PANEL_SIZE
+		);
 }

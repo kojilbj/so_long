@@ -24,6 +24,7 @@
 # define DOWN 2
 # define RIGHT 3
 # define LEFT 4
+# define ESC 65307
 
 typedef struct s_map_imgs
 {
@@ -32,7 +33,7 @@ typedef struct s_map_imgs
 	void			*collectible;
 	void			*background;
 	void			*wall;
-}					t_map_imgs;
+}				t_map_imgs;
 
 typedef struct s_map_info
 {
@@ -58,21 +59,23 @@ typedef struct s_vars
 	void			*win;
 	t_map_imgs		map_imgs;
 	t_map_info		map_info;
-	t_player_info	player_info;
-}					t_vars;
+	t_player_info		player_info;
+}				t_vars;
 
 // map_validate.c
-void				terminate_perror(char *msg, int errnum);
-void				file_name_validate(char *arg);
-void				map_texture_validate(char **map);
+void				map_letter_validate(char **map);
 void				map_shape_validate(char *map);
 void				correct_wall_validate(t_map_info map_info);
-void				map_playable_validate(t_map_info map_info);
+void				map_playable_validate(char *map_line, t_vars vars);
 
-// get_map.c
+//map_path_validate.c
+void				file_name_validate(char *arg);
+void				map_path_validate(char *map, t_vars vars);
+
+// map_info.c
 void				get_map_info(t_vars *vars, char *map);
 char				**get_z_dimention_map(char *map);
-char				*get_map_as_line(char *file_path);
+char				*map_file_to_line(char *file_path);
 void				set_map_imgs(t_vars *vars);
 
 // display_map.c
@@ -81,20 +84,21 @@ void				mapping_background(t_vars vars);
 void				put_map_to_window(t_vars vars);
 
 // get_player_info.c
-t_player_info		get_player_info(t_map_info map_info);
+t_player_info			get_player_info(t_map_info map_info);
 void				move_count(int move_direcion, t_vars *vars);
 void				collect_count(t_vars *vars);
 
 // control_player.c
 void				move_player(int direction, t_vars *vars);
-int					move_player_check(int keycode, t_vars vars);
+int				move_player_check(int keycode, t_vars vars);
 
 //window_manage.c
-void	reflesh_window(int direction, t_vars vars);
+void		reflesh_window(int direction, t_vars vars);
 
 // terminate.c
+void				terminate_perror(char *msg, int errnum);
 void				map_free(char **z_dimention_map);
-int					terminate_program(t_vars *vars);
-int					exit_check(t_vars vars);
+int				terminate_program(t_vars vars);
+int				exit_check(t_vars vars);
 
 #endif

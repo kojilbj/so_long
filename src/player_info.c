@@ -43,8 +43,10 @@ t_player_info	get_player_info(t_map_info map_info)
 void	move_count(int move_direction, t_vars *vars)
 {
 	if (move_direction)
+	{
 		vars->player_info.move_count++;
-	ft_printf("player has moved %d times\n", vars->player_info.move_count);
+		ft_printf("player has moved %d times\n", vars->player_info.move_count);
+	}
 }
 
 void	collect_count(t_vars *vars)

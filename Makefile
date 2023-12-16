@@ -11,9 +11,13 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wextra -Wall -Werror 
+CFLAGS = -Wextra -Wall -Werror -g -fsanitize=address
 
-SRCS = ./src/terminate.c ./src/display_map.c ./src/get_map.c ./src/player_info.c ./src/main.c ./src/validates.c ./src/control_player.c ./src/window_manage.c
+SRCS = ./src/terminate.c ./src/display_map.c ./src/map_info.c \
+	./src/player_info.c ./src/main.c ./src/validates_1.c \
+	./src/validates_2.c ./src/control_player.c \
+	./src/window_manage.c
+
 OBJS = $(SRCS:.c=.o)
 NAME = so_long
 

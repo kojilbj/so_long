@@ -12,29 +12,18 @@
 
 #include "../so_long.h"
 
-void	file_name_validate(char *arg)
-{
-	char	*ptr;
-
-	if (ft_strlen(arg) < 5)
-		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
-	ptr = ft_strrchr(arg, '.');
-	if (ft_strncmp(ptr, ".ber\0", 5))
-		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
-}
-
-static void	map_texture_validate_util(char c, int *pfg, int *efg)
+static void	map_letter_validate_util(char c, int *pfg, int *efg)
 {
 	if (!(c == '1' || c == '0' || c == 'E' || c == 'C' || c == 'P'
 			|| c == '\n'))
-		terminate_perror("Error\nMap contains invalid charecter", 22);
+		terminate_perror("Error\nMap contains invalid letter", 22);
 	if (c == 'P')
 		(*pfg)++;
 	if (c == 'E')
 		(*efg)++;
 }
 
-void	map_texture_validate(char **map)
+void	map_letter_validate(char **map)
 {
 	int		x;
 	int		y;
@@ -52,7 +41,7 @@ void	map_texture_validate(char **map)
 		while (map[y][x])
 		{
 			c = map[y][x];
-			map_texture_validate_util(c, &pfg, &efg);
+			map_letter_validate_util(c, &pfg, &efg);
 			x++;
 		}
 		y++;
@@ -65,12 +54,14 @@ void	map_shape_validate(char *map)
 {
 	int	width;
 	int	tmp;
+	int	i;
 
 	width = 0;
 	tmp = 0;
-	while (*map)
+	i = 0;
+	while (map[i])
 	{
-		if (*map == '\n')
+		if (map[i] == '\n')
 		{
 			if (tmp == 0)
 				tmp = width;
@@ -80,7 +71,7 @@ void	map_shape_validate(char *map)
 		}
 		else
 			width++;
-		map++;
+		i++;
 	}
 	if (tmp != width)
 		terminate_perror("Error\nMap must be rectangle", 22);
@@ -110,12 +101,13 @@ void	correct_wall_validate(t_map_info map_info)
 	}
 }
 
-void	map_playable_validate(t_map_info map_info)
+void	map_playable_validate(char *map_line, t_vars vars)
 {
-	if (map_info.width <= 2 || map_info.height <= 2)
+	if (vars.map_info.width <= 2 || vars.map_info.height <= 2)
 		terminate_perror("Error\nMap is too narrow", 22);
-	if (map_info.collectible_count < 1)
+	if (vars.map_info.collectible_count < 1)
 		terminate_perror("Error\nMap must has at least one 'C'", 22);
-	map_texture_validate(map_info.map);
-	correct_wall_validate(map_info);
+	map_letter_validate(vars.map_info.map);
+	correct_wall_validate(vars.map_info);
+	map_path_validate(map_line, vars);
 }
