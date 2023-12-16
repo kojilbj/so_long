@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 17:05:21 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:51:25 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	map_path_validate(char *map, t_vars vars)
 	i = 0;
 	map_dup = ft_split(map, '\n');
 	if (map_dup == NULL)
+	{
+		map_free(vars.map_info.map);
 		terminate_perror("Error\nft_split", 0);
+	}
 	flood_fill(map_dup, vars, vars.player_info.curr_x, vars.player_info.curr_y);
 	while (map_dup[i])
 	{
@@ -46,7 +49,8 @@ void	map_path_validate(char *map, t_vars vars)
 			|| ft_strchr(map_dup[i], 'E')
 			|| ft_strchr(map_dup[i], 'C'))
 		{
-			terminate_perror("Error\nMap doesn't have path", 22);
+			map_free(map_dup);
+			perror("Error\nMap doesn't have path", 22);
 			terminate_program(vars);
 		}
 		i++;
@@ -54,13 +58,13 @@ void	map_path_validate(char *map, t_vars vars)
 	map_free(map_dup);
 }
 
-void	file_name_validate(char *arg)
+int	file_name_validate(char *arg)
 {
 	char	*ptr;
 
 	if (ft_strlen(arg) < 5)
-		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
+		return (1);
 	ptr = ft_strrchr(arg, '.');
 	if (ft_strncmp(ptr, ".ber\0", 5))
-		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22);
+		return (1);
 }

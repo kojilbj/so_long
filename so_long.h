@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:34 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 17:22:19 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:27:42 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				mapping_background(t_vars vars);
 void				put_map_to_window(t_vars vars);
 
 // get_player_info.c
-t_player_info			get_player_info(t_map_info map_info);
+void	get_player_info(t_vars *vars);
 void				move_count(int move_direcion, t_vars *vars);
 void				collect_count(t_vars *vars);
 

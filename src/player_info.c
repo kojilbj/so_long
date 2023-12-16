@@ -6,18 +6,21 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:24 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 15:51:33 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:26:29 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-t_player_info	get_player_info(t_map_info map_info)
+void	get_player_info(t_vars *vars)
 {
 	int				x;
 	int				y;
-	t_player_info	player_info;
+	t_map_info	map_info;
+	t_player_info	*player_info;
 
+	map_info = vars->map_info;
+	player_info = &vars->player_info;
 	x = 0;
 	y = 0;
 	while (y < map_info.height)
@@ -27,17 +30,16 @@ t_player_info	get_player_info(t_map_info map_info)
 		{
 			if (map_info.map[y][x] == 'P')
 			{
-				player_info.curr_x = x;
-				player_info.curr_y = y;
+				player_info->curr_x = x;
+				player_info->curr_y = y;
 				break ;
 			}
 			x++;
 		}
 		y++;
 	}
-	player_info.collect_count = 0;
-	player_info.move_count = 0;
-	return (player_info);
+	player_info->collect_count = 0;
+	player_info->move_count = 0;
 }
 
 void	move_count(int move_direction, t_vars *vars)

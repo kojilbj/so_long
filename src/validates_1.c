@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 17:05:21 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:54:47 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	map_letter_validate(char **map)
 		terminate_perror("Error\nMap must has only one P and E", 22);
 }
 
-void	map_shape_validate(char *map)
+int	map_shape_validate(char *map)
 {
 	int	width;
 	int	tmp;
@@ -66,7 +66,7 @@ void	map_shape_validate(char *map)
 			if (tmp == 0)
 				tmp = width;
 			if (tmp != width)
-				terminate_perror("Error\nMap must be rectangle", 22);
+				return 1;
 			width = 0;
 		}
 		else
@@ -74,7 +74,7 @@ void	map_shape_validate(char *map)
 		i++;
 	}
 	if (tmp != width)
-		terminate_perror("Error\nMap must be rectangle", 22);
+		return 1;
 }
 
 void	correct_wall_validate(t_map_info map_info)
