@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 10:55:43 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 13:46:26 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:50:44 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ void	set_map_imgs(t_vars *vars)
 
 	mlx = vars->mlx;
 	map_imgs = &vars->map_imgs;
-	map_imgs->player = mlx_xpm_file_to_image(mlx, "textures/player.xpm", &tmp, &tmp);
-	map_imgs->exit = mlx_xpm_file_to_image(mlx, "textures/exit.xpm", &tmp, &tmp);
-	map_imgs->collectible = mlx_xpm_file_to_image(mlx, "textures/collectible.xpm",
-			&tmp, &tmp);
-	map_imgs->background = mlx_xpm_file_to_image(mlx, "textures/background.xpm",
-			&tmp, &tmp);
-	map_imgs->wall = mlx_xpm_file_to_image(mlx, "textures/wall.xpm", &tmp, &tmp);
+	map_imgs->player = mlx_xpm_file_to_image(mlx,
+			"textures/player.xpm", &tmp, &tmp);
+	map_imgs->exit = mlx_xpm_file_to_image(mlx,
+			"textures/exit.xpm", &tmp, &tmp);
+	map_imgs->collectible = mlx_xpm_file_to_image(mlx,
+			"textures/collectible.xpm", &tmp, &tmp);
+	map_imgs->background = mlx_xpm_file_to_image(mlx,
+			"textures/background.xpm", &tmp, &tmp);
+	map_imgs->wall = mlx_xpm_file_to_image(mlx,
+			"textures/wall.xpm", &tmp, &tmp);
 	if (!(map_imgs->player && map_imgs->exit && map_imgs->collectible
 			&& map_imgs->background && map_imgs->wall))
 		terminate_program(*vars, "Error\nmlx_xpm_file_to_image", 0);
