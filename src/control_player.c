@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:14 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 17:17:06 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:18:47 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	move_player(int direction, t_vars *vars)
 {
-	t_player_info *player;
+	t_player_info	*player;
 
 	player = &vars->player_info;
 	if (direction == UP)

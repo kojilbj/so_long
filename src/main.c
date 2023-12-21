@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:28 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 01:05:13 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:28:41 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,29 @@ int	key_hook_handler(int keycode, t_vars *vars)
 	int	move_direction;
 
 	if (keycode == ESC)
-		terminate_program(*vars);
+		terminate_program(*vars, NULL, 0);
 	move_direction = move_player_check(keycode, *vars);
 	move_player(move_direction, vars);
 	move_count(move_direction, vars);
 	collect_count(vars);
 	reflesh_window(move_direction, *vars);
 	if (exit_check(*vars))
-		terminate_program(*vars);
+		terminate_program(*vars, NULL, 0);
 	return (1);
 }
 
 void	validates(char *av, t_vars *vars)
 {
-	int		flg;
-
-	flg = 0;
-	if(file_name_validate(av))
-		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22, NULL);
-	vars->map_info.map_line = map_file_to_line(av);
-	if(map_shape_validate(map_line))
-	{
-		free(map_line);
-		terminate_perror("Error\nMap must be rectangle", 22, vars->map_info.map_line);
-	}
+	if (file_name_validate(av))
+		terminate_program(*vars,
+			"Error\nFile name is invalid, *.ber is expected", 22);
+	vars->map_info.map_line = map_file_to_line(*vars, av);
+	if (map_shape_validate(vars->map_info.map_line))
+		terminate_program(*vars, "Error\nMap must be rectangle", 22);
 	get_map_info(vars, vars->map_info.map_line);
-	vars->map_info.map = get_z_dimention_map(vars->map_info.map_line);
+	vars->map_info.map = get_z_dimention_map(*vars, vars->map_info.map_line);
 	get_player_info(vars);
-	flg = map_playable_validate(vars->map_info.map_line, *vars);
+	map_playable_validate(*vars);
 }
 
 void	loop_hooks(t_vars vars)
@@ -64,9 +59,9 @@ int	main(int ac, char *av[])
 {
 	t_vars	vars;
 
-	vars.map_info.map == NULL;
+	vars_setempty(&vars);
 	if (ac != 2)
-		terminate_perror("Error\tthis program needs a argument", 22, NULL);
+		terminate_program(vars, "Error\tthis program needs a argument", 22);
 	validates(av[1], &vars);
 	create_window(&vars);
 	set_map_imgs(&vars);

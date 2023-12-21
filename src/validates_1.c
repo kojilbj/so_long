@@ -6,24 +6,24 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 10:20:24 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:20:39 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static void	map_letter_validate_util(char c, int *pfg, int *efg)
+static void	map_letter_validate_util(t_vars vars, char c, int *pfg, int *efg)
 {
 	if (!(c == '1' || c == '0' || c == 'E' || c == 'C' || c == 'P'
 			|| c == '\n'))
-		terminate_perror("Error\nMap contains invalid letter", 22);
+		terminate_program(vars, "Error\nMap contains invalid letter", 22);
 	if (c == 'P')
 		(*pfg)++;
 	if (c == 'E')
 		(*efg)++;
 }
 
-void	map_letter_validate(char **map)
+void	map_letter_validate(t_vars vars)
 {
 	int		x;
 	int		y;
@@ -35,19 +35,19 @@ void	map_letter_validate(char **map)
 	y = 0;
 	pfg = 0;
 	efg = 0;
-	while (map[y])
+	while (vars.map_info.map[y])
 	{
 		x = 0;
-		while (map[y][x])
+		while (vars.map_info.map[y][x])
 		{
-			c = map[y][x];
-			map_letter_validate_util(c, &pfg, &efg);
+			c = vars.map_info.map[y][x];
+			map_letter_validate_util(vars, c, &pfg, &efg);
 			x++;
 		}
 		y++;
 	}
 	if (pfg != 1 || efg != 1)
-		terminate_perror("Error\nMap must has only one P and E", 22);
+		terminate_program(vars, "Error\nMap must has only one P and E", 22);
 }
 
 int	map_shape_validate(char *map)
@@ -66,7 +66,7 @@ int	map_shape_validate(char *map)
 			if (tmp == 0)
 				tmp = width;
 			if (tmp != width)
-				return 1;
+				return (1);
 			width = 0;
 		}
 		else
@@ -74,16 +74,19 @@ int	map_shape_validate(char *map)
 		i++;
 	}
 	if (tmp != width)
-		return 1;
+		return (1);
+	return (0);
 }
 
-void	correct_wall_validate(t_map_info map_info)
+void	correct_wall_validate(t_vars vars)
 {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
+	t_map_info	map_info;
 
 	x = 0;
 	y = 0;
+	map_info = vars.map_info;
 	while (y < map_info.height)
 	{
 		x = 0;
@@ -93,7 +96,8 @@ void	correct_wall_validate(t_map_info map_info)
 				|| x == map_info.width - 1)
 			{
 				if (map_info.map[y][x] != '1')
-					terminate_perror("Error\nMap must surrounded by '1'", 22);
+					terminate_program(vars,
+						"Error\nMap must surrounded by '1'", 22);
 			}
 			x++;
 		}
@@ -101,19 +105,13 @@ void	correct_wall_validate(t_map_info map_info)
 	}
 }
 
-void	map_playable_validate(char *map_line, t_vars vars)
+void	map_playable_validate(t_vars vars)
 {
 	if (vars.map_info.width <= 2 || vars.map_info.height <= 2)
-	{
-		free_map(vars.map_info.map);
-		terminate_perror("Error\nMap is too narrow", 22, vars.map_line);
-	}
+		terminate_program(vars, "Error\nMap is too narrow", 22);
 	if (vars.map_info.collectible_count < 1)
-	{
-		free_map(vars.map_indo.map);
-		terminate_perror("Error\nMap must has at least one 'C'", 22, vars.map_line);
-	}
-	map_letter_validate(vars.map_info.map);
-	correct_wall_validate(vars.map_info);
-	map_path_validate(map_line, vars);
+		terminate_program(vars, "Error\nMap must has at least one 'C'", 22);
+	map_letter_validate(vars);
+	correct_wall_validate(vars);
+	map_path_validate(vars);
 }

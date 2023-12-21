@@ -6,7 +6,7 @@
 #    By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 15:59:39 by kojwatan          #+#    #+#              #
-#    Updated: 2023/12/13 17:43:40 by kojwatan         ###   ########.fr        #
+#    Updated: 2023/12/21 11:27:55 by kojwatan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wextra -Wall -Werror -g -fsanitize=address
 SRCS = ./src/terminate.c ./src/display_map.c ./src/map_info.c \
 	./src/player_info.c ./src/main.c ./src/validates_1.c \
 	./src/validates_2.c ./src/control_player.c \
-	./src/window_manage.c
+	./src/window_manage.c ./src/utils.c
 
 OBJS = $(SRCS:.c=.o)
 NAME = so_long

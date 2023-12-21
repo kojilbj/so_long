@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 00:58:42 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:21:04 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,15 @@ static void	flood_fill(char **map, t_vars vars, int x, int y)
 	flood_fill(map, vars, x, y - 1);
 }
 
-void	map_path_validate(char *map, t_vars vars)
+void	map_path_validate(t_vars vars)
 {
 	char	**map_dup;
 	int		i;
 
 	i = 0;
-	map_dup = ft_split(map, '\n');
+	map_dup = ft_split(vars.map_info.map_line, '\n');
 	if (map_dup == NULL)
-	{
-		map_free(vars.map_info.map);
-		terminate_perror("Error\nft_split", 0, map);
-	}
+		terminate_program(vars, "Error\nft_split", 0);
 	flood_fill(map_dup, vars, vars.player_info.curr_x, vars.player_info.curr_y);
 	while (map_dup[i])
 	{
@@ -50,8 +47,7 @@ void	map_path_validate(char *map, t_vars vars)
 			|| ft_strchr(map_dup[i], 'C'))
 		{
 			map_free(map_dup);
-			map_free(vars.map_info.map);
-			exit_perror("Error\nMap doesn't have path", 22, map);
+			terminate_program(vars, "Error\nMap doesn't have path", 22);
 		}
 		i++;
 	}
@@ -67,4 +63,5 @@ int	file_name_validate(char *arg)
 	ptr = ft_strrchr(arg, '.');
 	if (ft_strncmp(ptr, ".ber\0", 5))
 		return (1);
+	return (0);
 }

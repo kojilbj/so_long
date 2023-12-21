@@ -6,20 +6,11 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:47 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 01:05:09 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:17:48 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
-
-void	terminate_perror(char *msg, int errnum, void *ptr)
-{
-	free(ptr);
-	if (errnum != 0)
-		errno = errnum;
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
 
 void	map_free(char **z_dimention_map)
 {
@@ -33,11 +24,18 @@ void	map_free(char **z_dimention_map)
 	}
 }
 
-int	terminate_program(t_vars vars)
+int	terminate_program(t_vars vars, char *msg, int errnum)
 {
-	mlx_destroy_window(vars.mlx, vars.win);
-	free(vars.map_info.map_line);
-	map_free(vars.map_info.map);
+	if (errnum != 0)
+		errno = errnum;
+	if (msg != NULL)
+		perror(msg);
+	if (vars.mlx != NULL)
+		mlx_destroy_window(vars.mlx, vars.win);
+	if (vars.map_info.map_line != NULL)
+		free(vars.map_info.map_line);
+	if (vars.map_info.map != NULL)
+		map_free(vars.map_info.map);
 	if (vars.map_imgs.background != NULL)
 		mlx_destroy_image(vars.mlx, vars.map_imgs.background);
 	if (vars.map_imgs.collectible != NULL)
@@ -48,7 +46,8 @@ int	terminate_program(t_vars vars)
 		mlx_destroy_image(vars.mlx, vars.map_imgs.player);
 	if (vars.map_imgs.wall != NULL)
 		mlx_destroy_image(vars.mlx, vars.map_imgs.wall);
-	free(vars.mlx);
+	if (vars.mlx != NULL)
+		free(vars.mlx);
 	exit(EXIT_SUCCESS);
 	return (1);
 }

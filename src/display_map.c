@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:17 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 00:53:39 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 10:52:59 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,10 @@ void	create_window(t_vars *vars)
 	height = vars->map_info.height * PANEL_SIZE;
 	vars->mlx = mlx_init();
 	if (vars->mlx == NULL)
-		terminate_perror("Error\nmlx_initilize", 0, vars->map_info.map);
+		terminate_program(*vars, "Error\nmlx_initilize", 0);
 	vars->win = mlx_new_window(vars->mlx, width, height, "so_long");
 	if (vars->win == NULL)
-	{
-		free(vars->mlx);
-		terminate_perror("Error\nmlx_new_window", 0);
-	}
+		terminate_program(*vars, "Error\nmlx_new_window", 0);
 }
 
 void	mapping_background(t_vars vars)
