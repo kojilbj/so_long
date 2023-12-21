@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:47 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/16 17:09:24 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:05:09 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	map_free(char **z_dimention_map)
 int	terminate_program(t_vars vars)
 {
 	mlx_destroy_window(vars.mlx, vars.win);
+	free(vars.map_info.map_line);
 	map_free(vars.map_info.map);
 	if (vars.map_imgs.background != NULL)
 		mlx_destroy_image(vars.mlx, vars.map_imgs.background);

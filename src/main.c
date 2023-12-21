@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:28 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/16 17:59:47 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:05:13 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,20 @@ int	key_hook_handler(int keycode, t_vars *vars)
 void	validates(char *av, t_vars *vars)
 {
 	int		flg;
-	char	*map_line;
 
 	flg = 0;
 	if(file_name_validate(av))
-		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22, *vars);
-	map_line = map_file_to_line(av);
+		terminate_perror("Error\nFile name is invalid, *.ber is expected", 22, NULL);
+	vars->map_info.map_line = map_file_to_line(av);
 	if(map_shape_validate(map_line))
 	{
 		free(map_line);
-		terminate_perror("Error\nMap must be rectangle", 22, *vars);
+		terminate_perror("Error\nMap must be rectangle", 22, vars->map_info.map_line);
 	}
-	get_map_info(vars, map_line);
-	vars->map_info.map = get_z_dimention_map(map_line);
+	get_map_info(vars, vars->map_info.map_line);
+	vars->map_info.map = get_z_dimention_map(vars->map_info.map_line);
 	get_player_info(vars);
-	flg = map_playable_validate(map_line, *vars);
-	free(map_line);
+	flg = map_playable_validate(vars->map_info.map_line, *vars);
 }
 
 void	loop_hooks(t_vars vars)
@@ -68,7 +66,7 @@ int	main(int ac, char *av[])
 
 	vars.map_info.map == NULL;
 	if (ac != 2)
-		terminate_perror("Error\tthis program needs a argument", 22, vars);
+		terminate_perror("Error\tthis program needs a argument", 22, NULL);
 	validates(av[1], &vars);
 	create_window(&vars);
 	set_map_imgs(&vars);

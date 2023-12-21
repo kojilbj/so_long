@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validate.c                                     :+:      :+:    :+:   */
+/*   validates_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/16 16:54:47 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 10:20:24 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,15 @@ void	correct_wall_validate(t_map_info map_info)
 void	map_playable_validate(char *map_line, t_vars vars)
 {
 	if (vars.map_info.width <= 2 || vars.map_info.height <= 2)
-		terminate_perror("Error\nMap is too narrow", 22);
+	{
+		free_map(vars.map_info.map);
+		terminate_perror("Error\nMap is too narrow", 22, vars.map_line);
+	}
 	if (vars.map_info.collectible_count < 1)
-		terminate_perror("Error\nMap must has at least one 'C'", 22);
+	{
+		free_map(vars.map_indo.map);
+		terminate_perror("Error\nMap must has at least one 'C'", 22, vars.map_line);
+	}
 	map_letter_validate(vars.map_info.map);
 	correct_wall_validate(vars.map_info);
 	map_path_validate(map_line, vars);

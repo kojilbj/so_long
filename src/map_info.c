@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map.c                                          :+:      :+:    :+:   */
+/*   map_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:20 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/13 16:00:46 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 00:55:34 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*map_file_to_line(char *file_path)
 	map_line = NULL;
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
-		terminate_perror("Error\nopen", 0);
+		terminate_perror("Error\nopen", 0, NULL);
 	while (1)
 	{
 		i = read(fd, buff, 9);
@@ -86,7 +86,7 @@ char	*map_file_to_line(char *file_path)
 		map_line = ft_strjoin(map_line, buff);
 		free(tmp);
 		if (map_line == NULL)
-			terminate_perror("Error\nft_strjoin", 0);
+			terminate_perror("Error\nft_strjoin", 0, NULL);
 	}
 	close(fd);
 	return (map_line);
@@ -98,6 +98,6 @@ char	**get_z_dimention_map(char *map)
 
 	z_dimention_map = ft_split(map, '\n');
 	if (z_dimention_map == NULL)
-		terminate_perror("Error\nft_split", 0);
+		terminate_perror("Error\nft_split", 0, map);
 	return (z_dimention_map);
 }

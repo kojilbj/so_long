@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:34 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/16 16:27:42 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:02:04 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_map_imgs
 typedef struct s_map_info
 {
 	char	**map;
+	char	*map_line;
 	int				width;
 	int				height;
 	int				exit_x;
@@ -96,7 +97,7 @@ int				move_player_check(int keycode, t_vars vars);
 void		reflesh_window(int direction, t_vars vars);
 
 // terminate.c
-void				terminate_perror(char *msg, int errnum);
+void				terminate_perror(char *msg, int errnum, void *ptr);
 void				map_free(char **z_dimention_map);
 int				terminate_program(t_vars vars);
 int				exit_check(t_vars vars);

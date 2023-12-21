@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_path_validate.c                                :+:      :+:    :+:   */
+/*   validates_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/16 16:51:25 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 00:58:42 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	map_path_validate(char *map, t_vars vars)
 	if (map_dup == NULL)
 	{
 		map_free(vars.map_info.map);
-		terminate_perror("Error\nft_split", 0);
+		terminate_perror("Error\nft_split", 0, map);
 	}
 	flood_fill(map_dup, vars, vars.player_info.curr_x, vars.player_info.curr_y);
 	while (map_dup[i])
@@ -50,8 +50,8 @@ void	map_path_validate(char *map, t_vars vars)
 			|| ft_strchr(map_dup[i], 'C'))
 		{
 			map_free(map_dup);
-			perror("Error\nMap doesn't have path", 22);
-			terminate_program(vars);
+			map_free(vars.map_info.map);
+			exit_perror("Error\nMap doesn't have path", 22, map);
 		}
 		i++;
 	}
