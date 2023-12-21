@@ -6,13 +6,12 @@
 #    By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 15:59:39 by kojwatan          #+#    #+#              #
-#    Updated: 2023/12/21 11:27:55 by kojwatan         ###   ########.fr        #
+#    Updated: 2023/12/21 13:42:24 by kojwatan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wextra -Wall -Werror -g -fsanitize=address
-
 SRCS = ./src/terminate.c ./src/display_map.c ./src/map_info.c \
 	./src/player_info.c ./src/main.c ./src/validates_1.c \
 	./src/validates_2.c ./src/control_player.c \

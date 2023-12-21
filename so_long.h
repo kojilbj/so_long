@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:34 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 11:33:47 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:33:53 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void				reflesh_window(int direction, t_vars vars);
 // terminate.c
 void				map_free(char **z_dimention_map);
 int					terminate_program(t_vars vars, char *msg, int errnum);
+int					terminate_handler(t_vars *vars);
 int					exit_check(t_vars vars);
 
 //utils.c

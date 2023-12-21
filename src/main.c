@@ -6,18 +6,18 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:28 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 11:28:41 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:37:58 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-/*#include <libc.h>
-__attribute__((destructor))
-static void destructor() {
-    system("leaks -q so_long");
-}
-*/
+// #include <libc.h>
+// __attribute__((destructor))
+// static void destructor() {
+//     system("leaks -q so_long");
+// }
+
 int	key_hook_handler(int keycode, t_vars *vars)
 {
 	int	move_direction;
@@ -51,7 +51,7 @@ void	validates(char *av, t_vars *vars)
 void	loop_hooks(t_vars vars)
 {
 	mlx_hook(vars.win, 2, 1L << 0, key_hook_handler, &vars);
-	mlx_hook(vars.win, 17, 1 << 17, terminate_program, &vars);
+	mlx_hook(vars.win, 17, 1 << 17, terminate_handler, &vars);
 	mlx_loop(vars.mlx);
 }
 

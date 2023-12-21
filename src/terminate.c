@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:47 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 11:17:48 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:28:19 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	map_free(char **z_dimention_map)
 		free(z_dimention_map[i]);
 		i++;
 	}
+	free(z_dimention_map);
+}
+
+int	terminate_handler(t_vars *vars)
+{
+	terminate_program(*vars, NULL, 0);
+	return (1);
 }
 
 int	terminate_program(t_vars vars, char *msg, int errnum)
