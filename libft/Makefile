@@ -48,6 +48,15 @@ SRCS = ./ft_digit_deci_to_hexa.c \
 		./ft_strmapi.c \
 		./ft_striteri.c \
 		./ft_split.c \
+		./ft_lstadd_back.c \
+		./ft_lstadd_front.c \
+		./ft_lstclear.c \
+		./ft_lstdelone.c \
+		./ft_lstiter.c \
+		./ft_lstlast.c \
+		./ft_lstmap.c \
+		./ft_lstnew.c \
+		./ft_lstsize.c \
 		./ft_printf.c \
 		./ft_print_c.c \
 		./ft_print_d.c \
