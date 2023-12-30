@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 13:31:06 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/30 14:51:18 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ void	map_path_validate(t_vars vars)
 		i++;
 	}
 	map_free(map_dup);
+}
+
+void	file_empty_validate(t_vars vars, char *file_name)
+{
+	int		fd;
+	int		i;
+	char	buff[10];
+
+	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+		terminate_program(vars, "Error\nopen", 0);
+	i = read(fd, buff, 9);
+	if (i == 0)
+		terminate_program(vars, "Error\nMap file is empty", 0);
+	close(fd);
 }
 
 int	file_name_validate(char *arg)

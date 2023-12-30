@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:34 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 13:33:53 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/30 14:51:58 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,16 @@ typedef struct s_vars
 	t_player_info	player_info;
 }					t_vars;
 
-// map_validate.c
+// validates_1.c
 void				map_letter_validate(t_vars vars);
 int					map_shape_validate(char *map);
 void				correct_wall_validate(t_vars vars);
 void				map_playable_validate(t_vars vars);
 
-//map_path_validate.c
+// validate_2.c
 int					file_name_validate(char *arg);
 void				map_path_validate(t_vars vars);
+void				file_empty_validate(t_vars vars, char *file_name);
 
 // map_info.c
 void				get_map_info(t_vars *vars, char *map);

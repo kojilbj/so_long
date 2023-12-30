@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:28 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/21 13:37:58 by kojwatan         ###   ########.fr       */
+/*   Updated: 2023/12/30 14:45:23 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	validates(char *av, t_vars *vars)
 	if (file_name_validate(av))
 		terminate_program(*vars,
 			"Error\nFile name is invalid, *.ber is expected", 22);
+	file_empty_validate(*vars, av);
 	vars->map_info.map_line = map_file_to_line(*vars, av);
 	if (map_shape_validate(vars->map_info.map_line))
 		terminate_program(*vars, "Error\nMap must be rectangle", 22);
