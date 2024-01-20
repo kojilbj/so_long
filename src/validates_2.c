@@ -6,7 +6,7 @@
 /*   By: kojwatan < kojwatan@student.42tokyo.jp>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:59:31 by kojwatan          #+#    #+#             */
-/*   Updated: 2023/12/30 14:51:18 by kojwatan         ###   ########.fr       */
+/*   Updated: 2024/01/21 02:24:52 by kojwatan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	file_empty_validate(t_vars vars, char *file_name)
 	if (fd == -1)
 		terminate_program(vars, "Error\nopen", 0);
 	i = read(fd, buff, 9);
-	if (i == 0)
-		terminate_program(vars, "Error\nMap file is empty", 0);
+	if (i < 1)
+		terminate_program(vars, "Error\nread", 0);
 	close(fd);
 }
 
